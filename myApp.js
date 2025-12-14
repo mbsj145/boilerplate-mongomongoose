@@ -74,4 +74,13 @@ const queryChain = (done) => { done(null); };
 
 /** **Do not edit below this line** **/
 exports.PersonModel = Person;
-exp
+exports.createAndSavePerson = createAndSavePerson;
+exports.createManyPeople = createManyPeople;
+exports.findPeopleByName = findPeopleByName;
+exports.findOneByFood = findOneByFood;
+exports.findPersonById = findPersonById;
+exports.findEditThenSave = findEditThenSave;
+exports.findAndUpdate = findAndUpdate;
+exports.removeById = removeById;
+exports.removeManyPeople = removeManyPeople;
+exports.queryChain = queryChain;
