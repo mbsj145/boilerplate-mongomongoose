@@ -1,5 +1,12 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
+let mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.error("MongoDB connection error:", err));
 
 // Define the schema
 const personSchema = new mongoose.Schema({
@@ -25,6 +32,9 @@ const createAndSavePerson = (done) => {
     if (err) return done(err); // Node convention: handle error
     done(null, data);          // Node convention: pass saved document
   });
+
+  // Close the connection after test
+  mongoose.connection.close();
 };
 
 // Placeholder functions for other challenges
