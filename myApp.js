@@ -107,18 +107,18 @@ const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
   Person.remove({ name: nameToRemove }, (err, result) => {
     if (err) return done(err);
-    done(null, result); // returns info about deleted docs
+    done(null, result);
   });
 };
 
-// Query Chain
+// Query Chain (using Mongoose query helpers)
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
   Person.find({ favoriteFoods: foodToSearch })
-    .sort({ name: 1 })
-    .limit(2)
-    .select({ age: 0 })
+    .sort({ name: 1 })      // sort by name ascending
+    .limit(2)               // limit to 2 results
+    .select({ age: 0 })     // hide the age field
     .exec((err, data) => {
       if (err) return done(err);
       done(null, data);
