@@ -35,13 +35,13 @@ const createAndSavePerson = (done) => {
 
 // 2️⃣ Create Many People
 const createManyPeople = (arrayOfPeople, done) => {
-  Person.create(arrayOfPeople, (err, people) => {
+  Person.create(arrayOfPeople, (err, data) => {
     if (err) return done(err);
-    done(null, people);
+    done(null, data);
   });
 };
 
-// 3️⃣ Use model.find() to Search Your Database
+// 3️⃣ Use model.find() to search by name
 const findPeopleByName = (personName, done) => {
   Person.find({ name: personName }, (err, people) => {
     if (err) return done(err);
@@ -49,7 +49,7 @@ const findPeopleByName = (personName, done) => {
   });
 };
 
-// 4️⃣ Use model.findOne() to Return a Single Matching Document
+// 4️⃣ Use model.findOne() to return a single matching document
 const findOneByFood = (food, done) => {
   Person.findOne({ favoriteFoods: food }, (err, person) => {
     if (err) return done(err);
@@ -57,7 +57,7 @@ const findOneByFood = (food, done) => {
   });
 };
 
-// 5️⃣ Use model.findById() to Search Your Database By _id
+// 5️⃣ Use model.findById() to search by _id
 const findPersonById = (personId, done) => {
   Person.findById(personId, (err, person) => {
     if (err) return done(err);
@@ -65,22 +65,44 @@ const findPersonById = (personId, done) => {
   });
 };
 
-// Placeholder functions for further challenges
-const findEditThenSave = (personId, done) => { done(null); };
-const findAndUpdate = (personName, done) => { done(null); };
-const removeById = (personId, done) => { done(null); };
-const removeManyPeople = (done) => { done(null); };
-const queryChain = (done) => { done(null); };
+// 6️⃣ Find, edit, then save
+const findEditThenSave = (personId, done) => {
+  const foodToAdd = "hamburger";
 
-/** **Do not edit below this line** **/
-exports.PersonModel = Person;
-exports.createAndSavePerson = createAndSavePerson;
-exports.createManyPeople = createManyPeople;
-exports.findPeopleByName = findPeopleByName;
-exports.findOneByFood = findOneByFood;
-exports.findPersonById = findPersonById;
-exports.findEditThenSave = findEditThenSave;
-exports.findAndUpdate = findAndUpdate;
-exports.removeById = removeById;
-exports.removeManyPeople = removeManyPeople;
-exports.queryChain = queryChain;
+  Person.findById(personId, (err, person) => {
+    if (err) return done(err);
+
+    person.favoriteFoods.push(foodToAdd);
+    person.save((err, updatedPerson) => {
+      if (err) return done(err);
+      done(null, updatedPerson);
+    });
+  });
+};
+
+// 7️⃣ Find and update
+const findAndUpdate = (personName, done) => {
+  const ageToSet = 20;
+
+  Person.findOneAndUpdate(
+    { name: personName },
+    { age: ageToSet },
+    { new: true },
+    (err, updatedPerson) => {
+      if (err) return done(err);
+      done(null, updatedPerson);
+    }
+  );
+};
+
+// 8️⃣ Remove by ID
+const removeById = (personId, done) => {
+  Person.findByIdAndRemove(personId, (err, removedPerson) => {
+    if (err) return done(err);
+    done(null, removedPerson);
+  });
+};
+
+// 9️⃣ Remove many people
+const removeManyPeople = (done) => {
+  const n
