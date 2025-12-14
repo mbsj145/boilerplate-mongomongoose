@@ -1,5 +1,5 @@
 require('dotenv').config();
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -8,33 +8,28 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
-// Define the schema
+// Schema
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: Number,
   favoriteFoods: [String]
 });
 
-// Create the model
+// Model
 const Person = mongoose.model("Person", personSchema);
 
-// Create and Save a Person
+// CREATE and SAVE a Person
 const createAndSavePerson = (done) => {
-  // 1️⃣ Create a new person instance
   const person = new Person({
-    name: "John Doe",               // must be a string
-    age: 30,                        // must be a number
-    favoriteFoods: ["Pizza", "Sushi"] // must be an array of strings
+    name: "John Doe",
+    age: 30,
+    favoriteFoods: ["Pizza", "Sushi"]
   });
 
-  // 2️⃣ Save the document to the database
   person.save((err, data) => {
-    if (err) return done(err); // Node convention: handle error
-    done(null, data);          // Node convention: pass saved document
+    if (err) return done(err);
+    done(null, data);
   });
-
-  // Close the connection after test
-  mongoose.connection.close();
 };
 
 // Placeholder functions for other challenges
@@ -48,15 +43,15 @@ const removeById = (personId, done) => { done(null); };
 const removeManyPeople = (done) => { done(null); };
 const queryChain = (done) => { done(null); };
 
-/** **Do not edit below this line** **/
+/** Exports */
 exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
+exports.createManyPeople = createManyPeople;
 exports.findPeopleByName = findPeopleByName;
 exports.findOneByFood = findOneByFood;
 exports.findPersonById = findPersonById;
 exports.findEditThenSave = findEditThenSave;
 exports.findAndUpdate = findAndUpdate;
-exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
