@@ -7,23 +7,34 @@ const personSchema = new mongoose.Schema({
   favoriteFoods: [String]
 });
 
-const Person = mongoose.model("Person", personSchema);
+// const Person = mongoose.model("Person", personSchema);
 
-// Example: creating a new person
-const newPerson = new Person({
-  name: "John Doe",
-  age: 30,
-  favoriteFoods: ["Pizza", "Sushi"]
-});
+// // Example: creating a new person
+// const newPerson = new Person({
+//   name: "John Doe",
+//   age: 30,
+//   favoriteFoods: ["Pizza", "Sushi"]
+// });
+// // Save to database
+// newPerson.save((err, data) => {
+//   if (err) return console.error(err);
+//   console.log("Person saved:", data);
+// });
 
-// Save to database
-newPerson.save((err, data) => {
-  if (err) return console.error(err);
-  console.log("Person saved:", data);
-});
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  // Create a new person instance
+  const person = new Person({
+    name: "John Doe",
+    age: 30,
+    favoriteFoods: ["Pizza", "Sushi"]
+  });
+
+  // Save the document to the database
+  person.save((err, data) => {
+    if (err) return done(err); // Handle error
+    done(null, data);           // Return the saved document
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
