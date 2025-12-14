@@ -33,7 +33,7 @@ const createAndSavePerson = (done) => {
   });
 };
 
-// 2️⃣ Create Many People
+// 2️⃣ Create Many Records with model.create()
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople, (err, people) => {
     if (err) return done(err);
@@ -41,8 +41,15 @@ const createManyPeople = (arrayOfPeople, done) => {
   });
 };
 
-// Placeholder functions for later exercises
-const findPeopleByName = (personName, done) => { done(null); };
+// 3️⃣ Use model.find() to Search Your Database
+const findPeopleByName = (personName, done) => {
+  Person.find({ name: personName }, (err, people) => {
+    if (err) return done(err);
+    done(null, people);
+  });
+};
+
+// Placeholder functions for remaining challenges
 const findOneByFood = (food, done) => { done(null); };
 const findPersonById = (personId, done) => { done(null); };
 const findEditThenSave = (personId, done) => { done(null); };
