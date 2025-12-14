@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -8,17 +9,17 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
-// Schema
+// Define the schema
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: Number,
   favoriteFoods: [String]
 });
 
-// Model
+// Create the model
 const Person = mongoose.model("Person", personSchema);
 
-// CREATE and SAVE a Person
+// 1️⃣ Create and Save a Person
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: "John Doe",
@@ -32,8 +33,15 @@ const createAndSavePerson = (done) => {
   });
 };
 
-// Placeholder functions for other challenges
-const createManyPeople = (arrayOfPeople, done) => { done(null); };
+// 2️⃣ Create Many People
+const createManyPeople = (arrayOfPeople, done) => {
+  Person.create(arrayOfPeople, (err, people) => {
+    if (err) return done(err);
+    done(null, people);
+  });
+};
+
+// Placeholder functions for later exercises
 const findPeopleByName = (personName, done) => { done(null); };
 const findOneByFood = (food, done) => { done(null); };
 const findPersonById = (personId, done) => { done(null); };
@@ -43,7 +51,7 @@ const removeById = (personId, done) => { done(null); };
 const removeManyPeople = (done) => { done(null); };
 const queryChain = (done) => { done(null); };
 
-/** Exports */
+/** **Do not edit below this line** **/
 exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
 exports.createManyPeople = createManyPeople;
