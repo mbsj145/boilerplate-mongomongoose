@@ -105,4 +105,36 @@ const removeById = (personId, done) => {
 
 // 9️⃣ Remove many people
 const removeManyPeople = (done) => {
-  const n
+  const nameToRemove = "Mary";
+  Person.deleteMany({ name: nameToRemove }, (err, result) => {
+    if (err) return done(err);
+    done(null, result);
+  });
+};
+
+// 10️⃣ Query chain
+const queryChain = (done) => {
+  const foodToSearch = "burrito";
+
+  Person.find({ favoriteFoods: foodToSearch })
+    .sort({ name: 1 })
+    .limit(2)
+    .select('-age')
+    .exec((err, data) => {
+      if (err) return done(err);
+      done(null, data);
+    });
+};
+
+/** **Do not edit below this line** **/
+exports.PersonModel = Person;
+exports.createAndSavePerson = createAndSavePerson;
+exports.createManyPeople = createManyPeople;
+exports.findPeopleByName = findPeopleByName;
+exports.findOneByFood = findOneByFood;
+exports.findPersonById = findPersonById;
+exports.findEditThenSave = findEditThenSave;
+exports.findAndUpdate = findAndUpdate;
+exports.removeById = removeById;
+exports.removeManyPeople = removeManyPeople;
+exports.queryChain = queryChain;
