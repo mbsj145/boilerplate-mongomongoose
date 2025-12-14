@@ -1,92 +1,44 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+// Define the schema
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: Number,
   favoriteFoods: [String]
 });
 
+// Create the model
 const Person = mongoose.model("Person", personSchema);
 
-// // Example: creating a new person
-const newPerson = new Person({
-  name: "John Doe",
-  age: 30,
-  favoriteFoods: ["Pizza", "Sushi"]
-});
-// Save to database
-newPerson.save((err, data) => {
-  if (err) return console.error(err);
-  console.log("Person saved:", data);
-});
-
-
+// Create and Save a Person
 const createAndSavePerson = (done) => {
-  // Create a new person instance
+  // 1️⃣ Create a new person instance
   const person = new Person({
-    name: "John Doe",
-    age: 30,
-    favoriteFoods: ["Pizza", "Sushi"]
+    name: "John Doe",               // must be a string
+    age: 30,                        // must be a number
+    favoriteFoods: ["Pizza", "Sushi"] // must be an array of strings
   });
 
-  // Save the document to the database
+  // 2️⃣ Save the document to the database
   person.save((err, data) => {
-    if (err) return done(err); // Handle error
-    done(null, data);           // Return the saved document
+    if (err) return done(err); // Node convention: handle error
+    done(null, data);          // Node convention: pass saved document
   });
 };
 
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
-};
+// Placeholder functions for other challenges
+const createManyPeople = (arrayOfPeople, done) => { done(null); };
+const findPeopleByName = (personName, done) => { done(null); };
+const findOneByFood = (food, done) => { done(null); };
+const findPersonById = (personId, done) => { done(null); };
+const findEditThenSave = (personId, done) => { done(null); };
+const findAndUpdate = (personName, done) => { done(null); };
+const removeById = (personId, done) => { done(null); };
+const removeManyPeople = (done) => { done(null); };
+const queryChain = (done) => { done(null); };
 
-const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
-};
-
-const findOneByFood = (food, done) => {
-  done(null /*, data*/);
-};
-
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
-};
-
-const findEditThenSave = (personId, done) => {
-  const foodToAdd = "hamburger";
-
-  done(null /*, data*/);
-};
-
-const findAndUpdate = (personName, done) => {
-  const ageToSet = 20;
-
-  done(null /*, data*/);
-};
-
-const removeById = (personId, done) => {
-  done(null /*, data*/);
-};
-
-const removeManyPeople = (done) => {
-  const nameToRemove = "Mary";
-
-  done(null /*, data*/);
-};
-
-const queryChain = (done) => {
-  const foodToSearch = "burrito";
-
-  done(null /*, data*/);
-};
-
-/** **Well Done !!**
-/* You completed these challenges, let's go celebrate !
- */
-
-//----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
-
+/** **Do not edit below this line** **/
 exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
 exports.findPeopleByName = findPeopleByName;
